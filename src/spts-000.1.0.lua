@@ -4,7 +4,7 @@
 ---
 --- libs
 
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/MrGraape/superfruit-script/main/superfruit%20script/libs/gui_lib.lua"))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/MrGraape/super-fruit/main/libs/gui_lib.lua"))()
 local Window = Library.CreateLib("Superfruit", "Ocean")
 --- all vars
 getgenv().fs_toggle = false
