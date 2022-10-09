@@ -19,6 +19,7 @@ getgenv().msvalue = game:GetService("Players").MrFruit303.PrivateStats.MovementS
 getgenv().jfvalue = game:GetService("Players").MrFruit303.PrivateStats.JumpForce.value
 getgenv().ppvalue = game:GetService("Players").MrFruit303.PrivateStats.PsychicPower.value
 getgenv().fsta = 1
+getgenv().ppv = 2
 Player = game.Players.LocalPlayer.Character.HumanoidRootPart
 getgenv().crystalcframe = Vector3.new(-2276.68359, 1955.55713, 1051.58582, 1, 0, 0, 0, 1, 0, 0, 0, 1)
 getgenv().rockcframe = Vector3.new(407.900024, 260.65332, 979.379822, 1, 0, 0, 0, 1, 0, 0, 0, 1)
@@ -33,6 +34,10 @@ getgenv().tornadocframe = Vector3.new(-2301.5061, 1003.84021, 1069.53088, 1, 0, 
 getgenv().hellfirecframe = Vector3.new(-250.57515, 290.834503, 979.104309, 1, 0, 0, 0, 1, 0, 0, 0, 1)
 getgenv().greenacidcframe = Vector3.new(-278.696777, 280.548737, 991.980652, 1, 0, 0, 0, 1, 0, 0, 0, 1)
 getgenv().redacidcframe = Vector3.new(-278.582245, 280.503174, 1006.93542, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+getgenv().meditatespot1cframe = Vector3.new(-2534.34839, 5483.41309, -534.897949, -0.265825033, 0.0362924114, -0.963337898, -0.0183069967, 0.998920858, 0.0426846147, 0.963847399, 0.0289824624, -0.264873743)
+getgenv().meditatespot2cframe = Vector3.new(-2566.1731, 5498.00977, -441.139313, -0.335961938, 0.0641777366, -0.939686537, 0.0197546426, 0.997936547, 0.061093241, 0.941668391, 0.00196183287, -0.336536527)
+getgenv().meditatespot3cframe = Vector3.new(-2587.60791, 5528.68506, -504.724915, -0.335961938, 0.0641777366, -0.939686537, 0.0197546426, 0.997936547, 0.061093241, 0.941668391, 0.00196183287, -0.336536527)
+getgenv().meditatespot4cframe = Vector3.new(-2547.21631, 5408.50928, -490.264435, -0.279112935, 0, -0.960258365, 0, 1, 0, 0.960258365, 0, -0.279112935)
 function teleport(cframetp)
     local Player = game.Players.LocalPlayer.Character.HumanoidRootPart
     Player.CFrame = CFrame.new(cframetp)
@@ -96,7 +101,7 @@ end
     function psychicpower()
     local args = {
     [1] = {
-    [1] = "+PP2"
+    [1] = ppv
     }
     }
     game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
@@ -207,7 +212,7 @@ MainSection:NewToggle("Pyshic Farm", "Turns off and on the AutoFarm For Psychic 
         pp_toggle = false
     end
 end)
-MainSection:NewDropdown("Fist Location", "Sets your Fist Farm Location", {"Normal","Rock", "Crystal", "Star 1", "Star 2", "Star 3"}, function(currentOption)
+MainSection:NewDropdown("Fist Location", "Sets your Fist Location MUST BE AT LOCATION", {"Normal","Rock", "Crystal", "Star 1", "Star 2", "Star 3"}, function(currentOption)
     if currentOption == "Rock" then
         fsta = 2
     elseif currentOption == "Crystal" then
@@ -222,6 +227,19 @@ MainSection:NewDropdown("Fist Location", "Sets your Fist Farm Location", {"Norma
         fsta = 1
     end
 end)
+MainSection:NewDropdown("Psychic Location", "Sets your Psychic location MUST BE AT LOCATION", {"normal","spot1(1m)", "spot2(1b)", "spot3(1t)", "spot4(1qa)"}, function(currentOption)
+    if currentOption == "spot1(1m)" then
+        ppv = "+PP3"
+    elseif currentOption == "spot2(1b)" then
+        ppv = "+PP4"
+    elseif currentOption == "spot3(1t)" then
+        ppv = "+PP5"
+    elseif currentOption == "spot4(1qa)" then
+        ppv = "+PP6"
+        elseif currentOption == "normal" then
+        ppv = "+PP2"
+    end
+end)
 
 -- Teleports
 local Teleports = Window:NewTab("Teleports")
@@ -231,7 +249,7 @@ TeleportsSection:NewButton("resets dropdowns", "it sets the dropdown selection t
     currentOption = nil
 end)
 
-TeleportsSection:NewDropdown("Fist Location Tp", "Teleports you to Fist locations", {"Rock", "Crystal", "Star 1", "Star 2", "Star 3"}, function(currentOption)
+TeleportsSection:NewDropdown("Fist Locations Tp", "Teleports you to Fist locations", {"Rock", "Crystal", "Star 1", "Star 2", "Star 3"}, function(currentOption)
     if currentOption == "Rock" then
         rocktp()
     elseif currentOption == "Crystal" then
@@ -244,7 +262,7 @@ TeleportsSection:NewDropdown("Fist Location Tp", "Teleports you to Fist location
         star3tp()
     end
 end)
-TeleportsSection:NewDropdown("Body Location Tp", "Teleports you to BT locations", {"Water", "Fire", "IceBerg", "Tornado", "Volcano", "Hellfire", "Green acid", "Red acid"}, function(currentOption)
+TeleportsSection:NewDropdown("Body Locations Tp", "Teleports you to BT locations", {"Water", "Fire", "IceBerg", "Tornado", "Volcano", "Hellfire", "Green acid", "Red acid"}, function(currentOption)
     if currentOption == "Water" then
         teleport(watercframe)
     elseif currentOption == "Fire" then
@@ -261,5 +279,16 @@ TeleportsSection:NewDropdown("Body Location Tp", "Teleports you to BT locations"
         teleport(greenacidcframe)
     elseif currentOption == "Red acid" then
         teleport(redacidcframe)
+    end
+end)
+TeleportsSection:NewDropdown("Psychic Locations Tp", "Teleports you to psychic locations", {"spot1(1m)", "spot2(1b)", "spot3(1t)", "spot4(1qa)"}, function(currentOption)
+        if currentOption == "spot1(1m)" then
+        teleport(meditatespot1cframe)
+    elseif currentOption == "spot2(1b)" then
+        teleport(meditatespot2cframe)
+    elseif currentOption == "spot3(1t)" then
+        teleport(meditatespot3cframe)
+    elseif currentOption == "spot4(1qa)" then
+        teleport(meditatespot4cframe)
     end
 end)
