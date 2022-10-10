@@ -41,6 +41,7 @@ getgenv().meditatespot1cframe = Vector3.new(-2534.34839, 5483.41309, -534.897949
 getgenv().meditatespot2cframe = Vector3.new(-2566.1731, 5498.00977, -441.139313, -0.335961938, 0.0641777366, -0.939686537, 0.0197546426, 0.997936547, 0.061093241, 0.941668391, 0.00196183287, -0.336536527)
 getgenv().meditatespot3cframe = Vector3.new(-2587.60791, 5528.68506, -504.724915, -0.335961938, 0.0641777366, -0.939686537, 0.0197546426, 0.997936547, 0.061093241, 0.941668391, 0.00196183287, -0.336536527)
 getgenv().meditatespot4cframe = Vector3.new(-2547.21631, 5408.50928, -490.264435, -0.279112935, 0, -0.960258365, 0, 1, 0, 0.960258365, 0, -0.279112935)
+getgenv().formulaforspeed = msvalue / 218
 function teleport(cframetp)
     local Player = game.Players.LocalPlayer.Character.HumanoidRootPart
     Player.CFrame = CFrame.new(cframetp)
@@ -298,6 +299,15 @@ end)
 local Player = Window:NewTab("Player")
 local PlayerSection = Player:NewSection("Misc")
 
+
+PlayerSection:NewButton("Respawn","This respawns your charecter", function()
+    local args = {
+        [1] = {
+            [1] = "Respawn"
+        }
+    }
+end)
+
 PlayerSection:NewDropdown("Weights", "Selects your weights", {"Unequip", "100 LB", "1 TON", "10 TON", "100 TON"}, function(currentOption)
     if currentOption == "Unequip" then
         local args = {
@@ -341,27 +351,67 @@ PlayerSection:NewDropdown("Weights", "Selects your weights", {"Unequip", "100 LB
         game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
     end
 end)
-local PlayerSection = Player:NewSection(Stats)
+
+PlayerSection:NewSlider("Walkspeed", "Dont go past your max walk speed", 1000, 0, function(s)
+    local args = {
+        [1] = {
+            [1] = "Setting",
+            [2] = "SelectedMS",
+            [3] = s
+        }
+    }
+    game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+end)
+
+Section:NewSlider("Jumpforce", "Changes your jump force", 500, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
+    local args = {
+        [1] = {
+            [1] = "Setting",
+            [2] = "SelectedJP",
+            [3] = s
+        }
+    }
+    game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+end)
+
+Section:NewSlider("Flyspeed", "Sets your flyspeed", 1000, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
+    local args = {
+        [1] = {
+            [1] = "Setting",
+            [2] = "SelectedFS",
+            [3] = s
+        }
+    }
+    game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+end)
+
+local PlayerSection = Player:NewSection("Stats")
+
 PlayerSection:NewButton(fsvalue,"this number is your fiststrength", function()
     fsvalue = stats.FistStrength.value
     button:UpdateButton(fsvalue)
 end)
+
 PlayerSection:NewButton(btvalue,"this number is your body toughness", function()
     btvalue = stats.BodyToughness.value
     button:UpdateButton(btvalue)
 end)
+
 PlayerSection:NewButton(b,"this number is your ", function()
      b = stats..value
     button:UpdateButton()
 end)
+
 PlayerSection:NewButton(msvalue,"this number is your Movement speed", function()
     msvalue = stats.MovementSpeed.value
     button:UpdateButton(msvalue)
 end)
+
 PlayerSection:NewButton(jfvalue,"this number is your Jump Force", function()
 jfvalue = stats.JumpForce.value
 button:UpdateButton(jfvalue)
 end)
+
 PlayerSection:NewButton(ppvalue,"this number is your Psychic Power", function()
 ppvalue = stats.PsychicPower.value
 button:UpdateButton(ppvalue)
