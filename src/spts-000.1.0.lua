@@ -34,6 +34,7 @@ getgenv().tornadocframe = Vector3.new(-2301.5061, 1003.84021, 1069.53088, 1, 0, 
 getgenv().hellfirecframe = Vector3.new(-250.57515, 290.834503, 979.104309, 1, 0, 0, 0, 1, 0, 0, 0, 1)
 getgenv().greenacidcframe = Vector3.new(-278.696777, 280.548737, 991.980652, 1, 0, 0, 0, 1, 0, 0, 0, 1)
 getgenv().redacidcframe = Vector3.new(-278.582245, 280.503174, 1006.93542, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+getgenv().questgivercframe = Vector3.new(488.485077, 249.190094, 895.57373, -0.175409049, 1.69412022e-08, -0.98449564, 1.00183861e-07, 1, -6.41904807e-10, 0.98449564, -9.87431648e-08, -0.175409049)
 getgenv().meditatespot1cframe = Vector3.new(-2534.34839, 5483.41309, -534.897949, -0.265825033, 0.0362924114, -0.963337898, -0.0183069967, 0.998920858, 0.0426846147, 0.963847399, 0.0289824624, -0.264873743)
 getgenv().meditatespot2cframe = Vector3.new(-2566.1731, 5498.00977, -441.139313, -0.335961938, 0.0641777366, -0.939686537, 0.0197546426, 0.997936547, 0.061093241, 0.941668391, 0.00196183287, -0.336536527)
 getgenv().meditatespot3cframe = Vector3.new(-2587.60791, 5528.68506, -504.724915, -0.335961938, 0.0641777366, -0.939686537, 0.0197546426, 0.997936547, 0.061093241, 0.941668391, 0.00196183287, -0.336536527)
@@ -174,9 +175,7 @@ local MainSection = Main:NewSection("AutoFarms")
 MainSection:NewButton("AutoFarm", "launchs the autofarms", function()
     Autofarm()
 end)
-MainSection:NewButton("prints fsta", "fsta", function()
-    print(fsta)
-end)
+
 MainSection:NewToggle("Fist Strength Farm", "Turns off and on the AutoFarm For Fist Strength", function(state)
     if state then
         fs_toggle = true
@@ -245,8 +244,8 @@ end)
 local Teleports = Window:NewTab("Teleports")
 local TeleportsSection = Teleports:NewSection("Training Spots")
 
-TeleportsSection:NewButton("resets dropdowns", "it sets the dropdown selection to 'nil'", function()
-    currentOption = nil
+TeleportsSection:NewButton("Quest Giver", "Teleports to the questgiver", function()
+    teleport(questgivercframe)
 end)
 
 TeleportsSection:NewDropdown("Fist Locations Tp", "Teleports you to Fist locations", {"Rock", "Crystal", "Star 1", "Star 2", "Star 3"}, function(currentOption)
@@ -290,5 +289,53 @@ TeleportsSection:NewDropdown("Psychic Locations Tp", "Teleports you to psychic l
         teleport(meditatespot3cframe)
     elseif currentOption == "spot4(1qa)" then
         teleport(meditatespot4cframe)
+    end
+end)
+
+-- Player
+local Player = Window:NewTab("Player")
+local PlayerSection = Player:NewSection("Misc")
+
+PlayerSection:NewDropdown("Weights", "Selects your weights", {"Unequip", "100 LB", "1 TON", "10 TON", "100 TON"}, function(currentOption)
+    if currentOption == "Unequip" then
+        local args = {
+            [1] = {
+                [1] = "Weight",
+                [2] = "Unequip"
+            }
+        }
+        game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+    elseif currentOption == "100 LB" then
+        local args = {
+            [1] = {
+                [1] = "Weight",
+                [2] = "Weight1"
+            }
+        }
+        game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+    elseif currentOption == "1 TON" then
+        local args = {
+            [1] = {
+                [1] = "Weight",
+                [2] = "Weight2"
+            }
+        }
+        game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+    elseif currentOption == "10 TON" then
+        local args = {
+            [1] = {
+                [1] = "Weight",
+                [2] = "Weight3"
+            }
+        }
+        game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+    elseif currentOption == "100 TON" then
+        local args = {
+            [1] = {
+                [1] = "Weight",
+                [2] = "Weight4"
+            }
+        }
+        game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
     end
 end)
