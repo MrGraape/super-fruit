@@ -12,15 +12,17 @@ getgenv().bt_toggle = false
 getgenv().ms_toggle = false
 getgenv().jf_toggle = false
 getgenv().pp_toggle = false
-getgenv().token = game:GetService("Players").MrFruit303.PrivateStats.Token.value
-getgenv().fsvalue = game:GetService("Players").MrFruit303.PrivateStats.FistStrength.value
-getgenv().btvalue = game:GetService("Players").MrFruit303.PrivateStats.BodyToughness.value
-getgenv().msvalue = game:GetService("Players").MrFruit303.PrivateStats.MovementSpeed.value
-getgenv().jfvalue = game:GetService("Players").MrFruit303.PrivateStats.JumpForce.value
-getgenv().ppvalue = game:GetService("Players").MrFruit303.PrivateStats.PsychicPower.value
+Player = game.Players.LocalPlayer.Name
+Players = game:GetService("Players")
+stats = Players[Player].PrivateStats
+getgenv().token  =  stats.Token.value
+getgenv().fsvalue = stats.FistStrength.value
+getgenv().btvalue = stats.BodyToughness.value
+getgenv().msvalue = stats.MovementSpeed.value
+getgenv().jfvalue = stats.JumpForce.value
+getgenv().ppvalue = stats.PsychicPower.value
 getgenv().fsta = 1
 getgenv().ppv = 2
-Player = game.Players.LocalPlayer.Character.HumanoidRootPart
 getgenv().crystalcframe = Vector3.new(-2276.68359, 1955.55713, 1051.58582, 1, 0, 0, 0, 1, 0, 0, 0, 1)
 getgenv().rockcframe = Vector3.new(407.900024, 260.65332, 979.379822, 1, 0, 0, 0, 1, 0, 0, 0, 1)
 getgenv().star1cframe = Vector3.new(1176.43018, 4776.36084, -2293.08911, -1, 0, 0, 0, 1, 0, 0, 0, -1)
@@ -338,4 +340,29 @@ PlayerSection:NewDropdown("Weights", "Selects your weights", {"Unequip", "100 LB
         }
         game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
     end
+end)
+local PlayerSection = Player:NewSection(Stats)
+PlayerSection:NewButton(fsvalue,"this number is your fiststrength", function()
+    fsvalue = stats.FistStrength.value
+    button:UpdateButton(fsvalue)
+end)
+PlayerSection:NewButton(btvalue,"this number is your body toughness", function()
+    btvalue = stats.BodyToughness.value
+    button:UpdateButton(btvalue)
+end)
+PlayerSection:NewButton(b,"this number is your ", function()
+     b = stats..value
+    button:UpdateButton()
+end)
+PlayerSection:NewButton(msvalue,"this number is your Movement speed", function()
+    msvalue = stats.MovementSpeed.value
+    button:UpdateButton(msvalue)
+end)
+PlayerSection:NewButton(jfvalue,"this number is your Jump Force", function()
+jfvalue = stats.JumpForce.value
+button:UpdateButton(jfvalue)
+end)
+PlayerSection:NewButton(ppvalue,"this number is your Psychic Power", function()
+ppvalue = stats.PsychicPower.value
+button:UpdateButton(ppvalue)
 end)
